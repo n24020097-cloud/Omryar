@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F3897F87-567C-44B2-8B2E-A6291DFFBD77}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Omryar</RootNamespace>
+    <AssemblyName>Omryar</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DgvExtention.cs" />
+    <Compile Include="FrmDailyReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmDailyReport.Designer.cs">
+      <DependentUpon>FrmDailyReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmHome.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmHome.Designer.cs">
+      <DependentUpon>FrmHome.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmLogin.Designer.cs">
+      <DependentUpon>FrmLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmReminder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmReminder.Designer.cs">
+      <DependentUpon>FrmReminder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmSetting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmSetting.Designer.cs">
+      <DependentUpon>FrmSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmVisitReminder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmVisitReminder.Designer.cs">
+      <DependentUpon>FrmVisitReminder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\FoundControls.cs" />
+    <Compile Include="Helpers\StaticData.cs" />
+    <Compile Include="MyTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FrmDailyReport.resx">
+      <DependentUpon>FrmDailyReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmHome.resx">
+      <DependentUpon>FrmHome.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmLogin.resx">
+      <DependentUpon>FrmLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmReminder.resx">
+      <DependentUpon>FrmReminder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmSetting.resx">
+      <DependentUpon>FrmSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmVisitReminder.resx">
+      <DependentUpon>FrmVisitReminder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Omryar.DAL\Omryar.DAL.csproj">
+      <Project>{603f6110-9112-49a1-811b-918fb0ef394f}</Project>
+      <Name>Omryar.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Omryar.Domain\Omryar.Domain.csproj">
+      <Project>{4ca68a03-8127-451e-b21d-fe5c0d154f43}</Project>
+      <Name>Omryar.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Omryar.Service\Omryar.Service.csproj">
+      <Project>{c2b814cb-d255-424e-87e0-655d20674a91}</Project>
+      <Name>Omryar.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Omryar.Shared\Omryar.Shared.csproj">
+      <Project>{645f85af-fae5-4022-aa7f-55e66c8c7203}</Project>
+      <Name>Omryar.Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Validation\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
