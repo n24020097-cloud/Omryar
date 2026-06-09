@@ -22,11 +22,8 @@ namespace Omryar
         IVisitService _visitService;
         private void btnMedicationReminder_Click(object sender, EventArgs e)
         {
-           
-            var frmReminder= new FrmReminder();
-            frmReminder.frmHome = this;
+            new FrmReminder().Show();
             this.Hide();
-            frmReminder.Show();
 
         }
 

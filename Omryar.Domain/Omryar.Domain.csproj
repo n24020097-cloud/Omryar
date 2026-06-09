@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTOs\DrugDtos\DrugDto.cs" />
+    <Compile Include="DTOs\DrugDtos\TodayDrugDto.cs" />
     <Compile Include="DTOs\PersonDtos\AddPersonDto.cs" />
     <Compile Include="DTOs\PersonDtos\CurrentUserDto.cs" />
     <Compile Include="DTOs\ReportDtos\ReportDto.cs" />

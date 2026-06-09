@@ -53,13 +53,9 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="DrugRepo.cs" />
-    <Compile Include="Migrations\202606052004491_InitialCreate.cs" />
-    <Compile Include="Migrations\202606052004491_InitialCreate.Designer.cs">
-      <DependentUpon>202606052004491_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202606060836068_createUserSettingTable.cs" />
-    <Compile Include="Migrations\202606060836068_createUserSettingTable.Designer.cs">
-      <DependentUpon>202606060836068_createUserSettingTable.cs</DependentUpon>
+    <Compile Include="Migrations\202606092013223_InitialCreate.cs" />
+    <Compile Include="Migrations\202606092013223_InitialCreate.Designer.cs">
+      <DependentUpon>202606092013223_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OmryarDbContext.cs" />
@@ -84,11 +80,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202606052004491_InitialCreate.resx">
-      <DependentUpon>202606052004491_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202606060836068_createUserSettingTable.resx">
-      <DependentUpon>202606060836068_createUserSettingTable.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202606092013223_InitialCreate.resx">
+      <DependentUpon>202606092013223_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

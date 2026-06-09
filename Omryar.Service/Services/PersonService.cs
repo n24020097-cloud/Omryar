@@ -68,6 +68,7 @@ namespace Omryar.Service
                 return OperationResult<CurrentUserDto>.Failed(Messages.PersonNotFound);
             return OperationResult<CurrentUserDto>.Success("",existingitem.ToPersnInfoDto());
         }
+        //fix output
         public async Task<OperationResult<List<Person>>> SelectPeopleAsync()
         {
             var list= await _personRepository.SelectPeopleAsync();

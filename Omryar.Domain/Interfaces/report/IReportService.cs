@@ -18,6 +18,6 @@ namespace Omryar.Domain.Interfaces
         Task<OperationResult<ReportDto>> GetReportByIdAsync(int id);
         Task RestoreReportAsync(int id);
         Task<OperationResult> UpdateReportAsync(ReportDto report);
-        Task<List<ReportListDto>> SelectReports(int id);
+        Task<List<ReportListDto>> SelectReportsAsync(int id);
     }
 }

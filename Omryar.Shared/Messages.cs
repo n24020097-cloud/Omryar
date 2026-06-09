@@ -8,35 +8,20 @@ namespace Omryar.Shared
 {
     public static class Messages
     {
-        public static class DrugNameMessage
+        public static class DrugMessages
         {
-            public static string IsEmptyOrNull => "لطفا نام دارو را وارد کنید";
-            public static string InvalidLength => "نام دارو باید بیشتر از سه حرف باشد";
-
-        }
-        public static class DrugDosageMessage
-        {
-            public static string IsEmptyOrNull => "لطفا تعداد بسته های قرص را مشخص کنید";
-        }
-        public static class MedicationPillCountMessage
-        {
-            public static string IsEmptyOrNull => "لطفا تعداد قرص ها را مشخص کنید";
-        }
-        public static class DrugRepeatValueMessage
-        {
-            public static string IsEmptyOrNull => "لطفا مقدار تکرار دارو را مشخص کنید";
-        }
-        public static class Drug
-        {
-            public static string ReminderRepeatType => "لطفا نوع تکرار یادآوری را مشخص کنید";
-            public static string Qestion => "آیا از حذف این دارو اطمینان دارید؟";
-            public static string RecordSuccess => "دارو با موفقیت ثبت شد";
-            public static string IsEmptyOrNullBasteCountOrPillCount => "لطفا تمامی اطلاعات را وارد کنید";
-            public static string IsEmptyOrNullCondition => "لطفا زمان مصرف دارو را مشخص کنید";
-            public static string IsNotValidBasteCount => "تعداد بسته معتبر نیست";
-            public static string IsNotValidPillCount => "تعداد قرص معتبر نیست";
-            public static string IsNotValidUseTime => "زمان مصرف معتبر نیست";
-            public static string IsDuplicateDrugName => "!دارویی با این نام در لیست یادآوری ثبت شده است";
+            public static string DrugNotFound => "داروی مورد نظر یافت نشد";
+            public static string DrugIsNull = "اطلاعات دارو نامعتبر است.";
+            public static string DrugNameRequired = "نام دارو الزامی است.";
+            public static string DrugNameLength = "نام دارو باید حداقل 2 کاراکتر باشد.";
+            public static string InvalidRepeatValue = "مقدار تکرار دارو نامعتبر است.";
+            public static string InvalidDrugQuantity = "تعداد دارو نمی‌تواند منفی باشد.";
+            public static string LastTakenTimeRequired = "زمان شروع مصرف دارو را مشخص کنید.";
+            public static string InvalidLastTakenTime = "زمان مصرف نمی‌تواند در آینده باشد.";
+            public static string DrugAdded = "دارو با موفقیت ثبت شد.";
+            public static string DrugUpdated = "دارو با موفقیت ویرایش شد.";
+            public static string DrugDeleted = "دارو با موفقیت حذف شد.";
+            public static string DuplicateDrug = "این دارو قبلاً ثبت شده است.";
         }
         public static class FullNameMessages
         {

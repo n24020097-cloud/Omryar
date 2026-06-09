@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="AppFactory.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="Mappings\DrugMapper.cs" />
     <Compile Include="Mappings\PersonMapper.cs" />
     <Compile Include="Mappings\ReportMapper.cs" />
     <Compile Include="Mappings\TaskMapper.cs" />

@@ -9,12 +9,11 @@ namespace Omryar.Domain.Interfaces
 {
     public interface IDrugRepository
     {
-        Task Add(Drug drug);
-        Task<Drug> Update(int id);
-        Task Delete(int id);
-        Task UpdateAndSaveChanges();
-        Task<List<DrugDto>> Select(int id);
-        Task<List<Drug>> SelectForReminder(int id);
-        Task<List<Drug>> GetDrugs();
+        Task AddAsync(Drug drug);
+        Task DeleteAsync(int id);
+        Task<List<Drug>> GetDrugsByPersonIdAsync(int personId);
+        Task<Drug> GetDrugByIdAsync(int drugId);
+        Task<bool> UpdateAsync(Drug drug);
+        Task<bool> IsDuplicateAsync(Drug drug);
     }
 }

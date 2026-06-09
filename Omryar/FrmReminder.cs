@@ -1,5 +1,7 @@
 ﻿using Omryar.DAL;
 using Omryar.Domain;
+using Omryar.Domain.DTOs;
+using Omryar.Domain.DTOs.DrugDtos;
 using Omryar.Domain.Enums;
 using Omryar.Domain.Interfaces;
 using Omryar.Helpers;
@@ -21,189 +23,101 @@ namespace Omryar
 {
     public partial class FrmReminder : Form
     {
-        public FrmHome frmHome;
         IDrugService _drugService = AppFactory.DrugService();
-
-        Drug drug;
-        bool isEdit = false;
-        int idForEdit = 0;
+        int _currentDrugId;
         public FrmReminder()
         {
             InitializeComponent();
-
-        }
-        private async void FrmReminder_Load(object sender, EventArgs e)
-        {
-           await FillDgv();
-            tmrReminder.Enabled = true;
         }
 
         private async void btnRecord_Click(object sender, EventArgs e)
         {
-            await Save();
-           await FillDgv();
-        }
-
-        private async Task Save()
-        {
-            if (!isEdit)
+            var drug=new DrugDto()
             {
-                drug = new Drug();
-                btnRecord.Text = "ثبت";
-            }
-
-            var tDrugName = mtxtDrugName.Text;
-            var tRepeatValue = mtxtRepeatValue.Text;
-            var tDosage = mtxtDosage.Text;
-
-            drug.DrugName = tDrugName;
-            drug.Dosage = int.Parse(tDosage);
-            drug.ReminderRepeatValue = int.Parse(tRepeatValue);
-            drug.PersonId = StaticData.CurrentUser.Id;
-            drug.ReminderDosage = drug.Dosage;
-
-
-            if (rdbtnDaily.Checked)
-                drug.ReminderRepeatType = RepeatType.Daily;
-            else if (rdbtnEvereXHours.Checked)
-                drug.ReminderRepeatType = RepeatType.EvereXHouers;
-            else
-                MessageBox.Show(Messages.Drug.ReminderRepeatType);
-
-           
-
-            var result = await _drugService.AddDrug(drug, idForEdit, StaticData.CurrentUser.Id);
-            if (!result.IsSuccess)
+                Id=_currentDrugId,
+                DrugName = mtxtDrugName.Text,
+                DrugQty = int.Parse(numericUpDownQty.Value.ToString()),
+                IsActive = checkBoxActive.Checked,
+                LastTakenTime = dateTimePicker1.Value,
+                Note = rtxtNote.Text,
+                RepeatType = (RepeatType)comboBoxtype.SelectedIndex,
+                RepeatValue = int.Parse(numericUpDownRepeatValue.Value.ToString()),
+                PersonId=StaticData.CurrentUser.Id
+            };
+            if (_currentDrugId == 0)
             {
+                var result = await _drugService.AddDrugAsync(drug);
                 MessageBox.Show(result.Message);
-                return;
             }
-            ClearTextBox();
-
-          await _drugService.UpdateAndSaveChanges();
+            else
+            {
+                var result = await _drugService.UpdateDrugAsync(drug);
+                MessageBox.Show(result.Message);
+            }
+            fillDgv();
+            clearFrm();
         }
 
-        private void ClearTextBox()
+        private void FrmReminder_Load(object sender, EventArgs e)
         {
-            mtxtDrugName.Clear();
-            mtxtDosage.Clear();
-            mtxtRepeatValue.Clear();
-            rdbtnDaily.Checked= false;
-            rdbtnEvereXHours.Checked = false;
-        }
+            fillDgv();
+            comboBoxtype.Items.Add("ساعتی");
+            comboBoxtype.Items.Add("روزانه");
+            comboBoxtype.Items.Add("هفتگی");
 
-        private async Task FillDgv()
-        {
-            dgvReminder.DataSource = await _drugService.SelectDrug(StaticData.CurrentUser.Id);
+            comboBoxtype.DisplayMember = "Text";
+            comboBoxtype.ValueMember = "Value";
         }
 
         private async void dgvReminder_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0)
-                return;
-
-            if (e.ColumnIndex == dgvReminder.Columns[ColDelete.Name].Index)
+            if(e.ColumnIndex<=0) return;
+            var drug = dgvReminder.Rows[e.RowIndex].DataBoundItem as DrugDto;
+            if (drug == null) return;
+            if (dgvReminder.Columns[e.ColumnIndex].HeaderText == "ویرایش")
             {
-                 idForEdit = (int)dgvReminder.Rows[e.RowIndex].Cells["DrugId"].Value;
-                var result=MessageBox.Show(Messages.Drug.Qestion,null,MessageBoxButtons.YesNo);
-                if (result == DialogResult.No)
-                    return;
-               await _drugService.DeleteDrug(idForEdit);
+                var fullDrug = await _drugService.GetDrugByIdAsync(drug.Id);
+                _currentDrugId = fullDrug.Data.Id;
+                mtxtDrugName.Text = fullDrug.Data.DrugName;
+                rtxtNote.Text = fullDrug.Data.Note;
+                numericUpDownQty.Value = fullDrug.Data.DrugQty;
+                numericUpDownRepeatValue.Value=fullDrug.Data.RepeatValue;
+                comboBoxtype.SelectedIndex = (int)fullDrug.Data.RepeatType;
+                checkBoxActive.Checked = fullDrug.Data.IsActive;
+                dateTimePicker1.Value = (DateTime)fullDrug.Data.LastTakenTime;
             }
 
-           else if (e.ColumnIndex == dgvReminder.Columns[ColEdit.Name].Index)
+            if (dgvReminder.Columns[e.ColumnIndex].HeaderText == "حذف")
             {
-                isEdit = true;
-                btnRecord.Text = "ویرایش";
-                idForEdit = (int)dgvReminder.Rows[e.RowIndex].Cells["DrugId"].Value;
-                drug =await _drugService.UpdateDrug(idForEdit);
-                FillInfo(drug);
-               
-            }
-           await FillDgv();
-        }
-
-        private void FillInfo(Drug d)
-        {
-            mtxtDrugName.Text =d.DrugName;
-            mtxtDosage.Text = d.Dosage.ToString();
-            mtxtRepeatValue.Text= d.ReminderRepeatValue.ToString();
-
-            if(d.ReminderRepeatType == RepeatType.Daily)
-                rdbtnDaily.Checked = true;
-            else
-                rdbtnEvereXHours.Checked = true;
-        }
-
-        private void dgvReminder_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        {
-            dgvReminder.Rows[e.RowIndex].Cells[ColRow.Name].Value = e.RowIndex + 1;
-        }
-
-        private void mtxtRepeatValue_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            DigitPress(e);
-        }
-
-        private void mtxtDosage_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            DigitPress(e);
-        }
-
-        public void DigitPress(KeyPressEventArgs e)
-        {
-            if (!char.IsDigit(e.KeyChar) && e.KeyChar != (char)Keys.Back)
-            {
-                e.Handled = true;
+                await _drugService.DeleteDrugAsync(drug.Id);
+                clearFrm();
+                fillDgv();
             }
         }
 
-        private void FrmReminder_FormClosing(object sender, FormClosingEventArgs e)
+        private async void fillDgv()
         {
-            frmHome.Show();
+            dgvReminder.DataSource = await _drugService.GetDrugsByPersonIdAsync(StaticData.CurrentUser.Id);
         }
 
-        private async void tmrReminder_Tick(object sender, EventArgs e)
+        private void clearFrm()
         {
-           
-           var res= await _drugService.SelectForReminder(StaticData.CurrentUser.Id);
-
-
-            foreach (var dr in res)
-            {
-                if (dr.ReminderDosage <= 0)
-                {
-                    dr.IsDeleted = true;
-                    MessageBox.Show("شما به پایان دارو رسیدید: " + dr.DrugName);
-                    await _drugService.UpdateAndSaveChanges();
-                    continue;
-                }
-
-
-                var nextTime = dr.ReminderStartTime.AddHours(dr.ReminderRepeatValue);
-
-                if (DateTime.Now >= nextTime)
-                {
-                    MessageBox.Show("زمان مصرف دارو: " + dr.DrugName);
-
-                    dr.ReminderDosage -= 1;
-                    dr.ReminderStartTime = DateTime.Now;
-
-                    await _drugService.UpdateAndSaveChanges();
-                }
-            }
-
-        }
-
-        private void btnSetting_Click(object sender, EventArgs e)
-        {
-            new FrmSetting().Show();
-            this.Close();
+            mtxtDrugName.Text = "";
+            rtxtNote.Text = "";
+            numericUpDownQty.Value = 0;
+            numericUpDownRepeatValue.Value = 0;
+            checkBoxActive.Checked=false;
         }
 
         private void btnBack_Click(object sender, EventArgs e)
         {
             new FrmHome().Show();
+            this.Close();
+        }
+
+        private void btnSetting_Click(object sender, EventArgs e)
+        {
+            new FrmSetting().Show();
             this.Close();
         }
     }

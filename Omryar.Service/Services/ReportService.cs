@@ -28,35 +28,26 @@ namespace Omryar.Service
                 return OperationResult.Failed(Messages.ReportMessages.DuplicateReport);
 
             await _reportRepo.AddAsync(re);
-
             return OperationResult.Success();
         }
         public async Task<OperationResult> DeleteReportLogicAsync(int id)
         {
             var result = await _reportRepo.MarkAsDeletedAsync(id);
             if (result)
-            {
                 return OperationResult.Success(Messages.ReportMessages.ReportIsDeleted);
-            }
             return OperationResult.Failed(Messages.ReportMessages.ReportNotFound);
         }
 
         public async Task<List<ReportListDto>> GetDeletedReportAsync(int id)
         {
             var listReport = await _reportRepo.GetDeletedReportsAsync(id);
-            var listDto = new List<ReportListDto>();
-            foreach (var item in listReport)
-                listDto.Add(item.ToReportListDto());
-            return listDto;
+            return listReport.Select(r=>r.ToReportListDto()).ToList();
         }
         public async Task<OperationResult<ReportDto>> GetReportByIdAsync(int id)
         {
             var result = await _reportRepo.GetByIdAsync(id);
             if (result == null)
-            {
-                return OperationResult<ReportDto>
-                    .Failed(Messages.ReportMessages.ReportNotFound);
-            }
+                 return OperationResult<ReportDto>.Failed(Messages.ReportMessages.ReportNotFound);
             return OperationResult<ReportDto>.Success("", result.ToReportDto());
         }
         public async Task<OperationResult> HardDeleteAsync(int id)
@@ -73,7 +64,7 @@ namespace Omryar.Service
             await _reportRepo.RestoreReportAsync(id);
         }
 
-        public async Task<List<ReportListDto>> SelectReports(int id)
+        public async Task<List<ReportListDto>> SelectReportsAsync(int id)
         {
             var listReport = await _reportRepo.SelectReportsAsync(id);
             return listReport
@@ -91,9 +82,7 @@ namespace Omryar.Service
 
             var result=await _reportRepo.UpdateAsync(re);
             if (result)
-            {
                 return OperationResult.Success(Messages .ReportMessages.ReportUpdated);
-            }
             return OperationResult.Failed(Messages.ReportMessages.ReportNotFound);
         }
     }

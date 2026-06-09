@@ -61,6 +61,20 @@
             this.rbtnAngryEmoji = new System.Windows.Forms.RadioButton();
             this.rbtnSadEmoji = new System.Windows.Forms.RadioButton();
             this.rbtnHappyEmoji = new System.Windows.Forms.RadioButton();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ReportDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.edit = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.delete = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.DisplayTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colid = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.date2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.coldelete = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.coledit = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.taskId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.coldelete1 = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.IsCompleted = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.TaskTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -154,6 +168,12 @@
             // dgvReport
             // 
             this.dgvReport.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvReport.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colid,
+            this.date2,
+            this.date,
+            this.coldelete,
+            this.coledit});
             this.dgvReport.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvReport.Location = new System.Drawing.Point(3, 3);
             this.dgvReport.Name = "dgvReport";
@@ -175,6 +195,12 @@
             // dgvTrash
             // 
             this.dgvTrash.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvTrash.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Id,
+            this.ReportDate,
+            this.edit,
+            this.delete,
+            this.DisplayTitle});
             this.dgvTrash.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvTrash.Location = new System.Drawing.Point(3, 3);
             this.dgvTrash.Name = "dgvTrash";
@@ -237,6 +263,11 @@
             // dgvTasks
             // 
             this.dgvTasks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvTasks.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.taskId,
+            this.coldelete1,
+            this.IsCompleted,
+            this.TaskTitle});
             this.dgvTasks.Location = new System.Drawing.Point(410, 171);
             this.dgvTasks.Name = "dgvTasks";
             this.dgvTasks.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
@@ -477,6 +508,91 @@
             this.rbtnHappyEmoji.Tag = "0";
             this.rbtnHappyEmoji.UseVisualStyleBackColor = true;
             // 
+            // Id
+            // 
+            this.Id.DataPropertyName = "Id";
+            this.Id.HeaderText = "Id";
+            this.Id.Name = "Id";
+            this.Id.Visible = false;
+            // 
+            // ReportDate
+            // 
+            this.ReportDate.DataPropertyName = "ReportDate";
+            this.ReportDate.HeaderText = "Column1";
+            this.ReportDate.Name = "ReportDate";
+            this.ReportDate.Visible = false;
+            // 
+            // edit
+            // 
+            this.edit.HeaderText = "ویرایش";
+            this.edit.Name = "edit";
+            // 
+            // delete
+            // 
+            this.delete.HeaderText = "حذف";
+            this.delete.Name = "delete";
+            this.delete.Text = "X";
+            // 
+            // DisplayTitle
+            // 
+            this.DisplayTitle.DataPropertyName = "DisplayTitle";
+            this.DisplayTitle.HeaderText = "تاریخ";
+            this.DisplayTitle.Name = "DisplayTitle";
+            // 
+            // colid
+            // 
+            this.colid.DataPropertyName = "Id";
+            this.colid.HeaderText = "Column1";
+            this.colid.Name = "colid";
+            this.colid.Visible = false;
+            // 
+            // date2
+            // 
+            this.date2.DataPropertyName = "ReportDate";
+            this.date2.HeaderText = "Column1";
+            this.date2.Name = "date2";
+            this.date2.Visible = false;
+            // 
+            // date
+            // 
+            this.date.DataPropertyName = "DisplayTitle";
+            this.date.HeaderText = "تاریخ";
+            this.date.Name = "date";
+            // 
+            // coldelete
+            // 
+            this.coldelete.HeaderText = "حذف";
+            this.coldelete.Name = "coldelete";
+            // 
+            // coledit
+            // 
+            this.coledit.HeaderText = "ویرایش";
+            this.coledit.Name = "coledit";
+            // 
+            // taskId
+            // 
+            this.taskId.DataPropertyName = "Id";
+            this.taskId.HeaderText = "Column1";
+            this.taskId.Name = "taskId";
+            this.taskId.Visible = false;
+            // 
+            // coldelete1
+            // 
+            this.coldelete1.HeaderText = "حذف";
+            this.coldelete1.Name = "coldelete1";
+            // 
+            // IsCompleted
+            // 
+            this.IsCompleted.DataPropertyName = "IsCompleted";
+            this.IsCompleted.HeaderText = "وضعیت";
+            this.IsCompleted.Name = "IsCompleted";
+            // 
+            // TaskTitle
+            // 
+            this.TaskTitle.DataPropertyName = "TaskTitle";
+            this.TaskTitle.HeaderText = "کار";
+            this.TaskTitle.Name = "TaskTitle";
+            // 
             // FrmDailyReport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 17F);
@@ -548,5 +664,19 @@
         private System.Windows.Forms.TabPage tabReport;
         private System.Windows.Forms.TabPage tabPageTrash;
         private System.Windows.Forms.DataGridView dgvTrash;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ReportDate;
+        private System.Windows.Forms.DataGridViewButtonColumn edit;
+        private System.Windows.Forms.DataGridViewButtonColumn delete;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DisplayTitle;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colid;
+        private System.Windows.Forms.DataGridViewTextBoxColumn date2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn date;
+        private System.Windows.Forms.DataGridViewButtonColumn coldelete;
+        private System.Windows.Forms.DataGridViewButtonColumn coledit;
+        private System.Windows.Forms.DataGridViewTextBoxColumn taskId;
+        private System.Windows.Forms.DataGridViewButtonColumn coldelete1;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn IsCompleted;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TaskTitle;
     }
 }

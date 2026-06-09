@@ -1,4 +1,5 @@
-﻿using Omryar.Shared;
+﻿using Omryar.Domain.DTOs.DrugDtos;
+using Omryar.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,39 +11,27 @@ namespace Omryar.Domain
 {
     public class ValidatorDrug
     {
-        public OperationResult DrugValidate(Drug drug)
+        public OperationResult Validate(DrugDto dto)
         {
-            if (!ValidateName(drug.DrugName).IsSuccess)
-                return OperationResult.Failed(ValidateName(drug.DrugName).Message);
-            if (!ValidateReminderRepeatValue(drug.ReminderRepeatValue).IsSuccess)
-                return OperationResult.Failed(ValidateReminderRepeatValue(drug.ReminderRepeatValue).Message);
-            if (!ValidateDosage(drug.Dosage).IsSuccess)
-                return OperationResult.Failed(ValidateDosage(drug.Dosage).Message);
-           
-            return OperationResult.Success();
-        }
+            if (string.IsNullOrWhiteSpace(dto.DrugName))
+                return OperationResult.Failed(Messages.DrugMessages.DrugNameRequired);
 
-        public OperationResult ValidateName(string name)
-        {
-            if (string.IsNullOrEmpty(name))
-                return OperationResult.Failed(Messages.DrugNameMessage.IsEmptyOrNull);
-            if (name.Length < 3)
-                return OperationResult.Failed(Messages.DrugNameMessage.InvalidLength);
-            return OperationResult.Success();
-        }
-        public OperationResult ValidateReminderRepeatValue(int rv)
-        {
-            if (rv == 0)
-                return OperationResult.Failed(Messages.DrugRepeatValueMessage.IsEmptyOrNull);
-            return OperationResult.Success();
-        }
-        public OperationResult ValidateDosage(int d)
-        {
-            if (d == 0)
-                return OperationResult.Failed(Messages.DrugDosageMessage.IsEmptyOrNull);
-            return OperationResult.Success();
-        }
+            if (dto.DrugName.Length < 2)
+                return OperationResult.Failed(Messages.DrugMessages.DrugNameLength);
 
+            if (dto.RepeatValue <= 0)
+                return OperationResult.Failed(Messages.DrugMessages.InvalidRepeatValue);
 
+            if (dto.DrugQty < 0)
+                return OperationResult.Failed(Messages.DrugMessages.InvalidDrugQuantity);
+
+            if (dto.LastTakenTime == null)
+                return OperationResult.Failed(Messages.DrugMessages.LastTakenTimeRequired);
+
+            if (dto.LastTakenTime > DateTime.Now)
+                return OperationResult.Failed(Messages.DrugMessages.InvalidLastTakenTime);
+
+            return OperationResult.Success();
+        }
     }
 }

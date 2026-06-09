@@ -8,7 +8,8 @@ namespace Omryar.Domain.Enums
 {
     public enum RepeatType
     {
-        Daily=0,
-        EvereXHouers=1,
+        Hourly=0,
+        Daily=1,
+        Weekly=2
     }
 }

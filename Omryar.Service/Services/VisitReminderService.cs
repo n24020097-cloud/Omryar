@@ -59,17 +59,14 @@ namespace Omryar.Service.Services
             var visit = await _visitRepo.GetByIdAsync(id);
 
             if (visit == null)
-                return OperationResult<VisitReminderDto>
-                    .Failed(Messages.VisitMessages.VisitNotFound);
+                return OperationResult<VisitReminderDto>.Failed(Messages.VisitMessages.VisitNotFound);
 
-            return OperationResult<VisitReminderDto>
-                .Success("", visit.ToDto());
+            return OperationResult<VisitReminderDto>.Success("", visit.ToDto());
         }
 
         public async Task<List<VisitReminderDto>> GetByPersonIdAsync(int personId)
         {
             var list = await _visitRepo.GetByPersonIdAsync(personId);
-
             return list
                 .Select(v => v.ToDto())
                 .ToList();

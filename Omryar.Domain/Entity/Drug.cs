@@ -12,13 +12,12 @@ namespace Omryar.Domain
     {
         public int PersonId { get; set; }
         public string DrugName { get; set; }
-        public int Dosage { get; set; }
-        public RepeatType ReminderRepeatType { get; set; }
-        public int ReminderRepeatValue { get; set; }
-        public DateTime ReminderStartTime { get; set; }=DateTime.Now;
-        public DateTime? LastReminderTime { get; set; }
-
-        public int ReminderDosage { get; set; }
+        public RepeatType RepeatType { get; set; }
+        public int RepeatValue { get; set; }
+        public bool IsActive { get; set; }
+        public string Note { get; set; }
+        public DateTime? LastTakenTime { get; set; }
+        public int DrugQty { get; set; }
 
     }
 }

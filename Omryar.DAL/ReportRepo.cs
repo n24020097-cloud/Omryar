@@ -144,7 +144,7 @@ namespace Omryar.DAL
 
             return await _db.DailyReports.AnyAsync(r =>
                 r.PersonId == report.PersonId &&
-                r.ReportDate.Date == date &&
+                r.ReportDate == date &&
                 !r.IsDeleted &&
                 (report.Id == 0 || r.Id != report.Id)
             );
