@@ -24,14 +24,6 @@ namespace Omryar.DAL
             _db.Drugs.Add(drug);
             await _db.SaveChangesAsync();
         }  
-
-        public async Task DeleteAsync(int id)
-        {
-            var result = await _db.Drugs.FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
-            result.IsDeleted = true;
-            await _db.SaveChangesAsync();
-        }
-
         public async Task<List<Drug>> GetDrugsByPersonIdAsync(int personId)
         {
             var result = await _db.Drugs
@@ -40,15 +32,9 @@ namespace Omryar.DAL
             return result;
 
         }
-        public async Task<Drug> GetDrugByIdAsync(int drugId)
-        {
-            return await _db.Drugs
-                .FirstOrDefaultAsync(x => !x.IsDeleted && x.Id == drugId);
-
-        }
         public async Task<bool> UpdateAsync(Drug drug)
         {
-            var existingItem = await GetDrugByIdAsync(drug.Id);
+            var existingItem = await GetByIdAsync(drug.Id);
             if (existingItem == null) return false;
             existingItem.Note = drug.Note;
             existingItem.DrugQty = drug.DrugQty;
@@ -62,9 +48,62 @@ namespace Omryar.DAL
         }
         public async Task<bool> IsDuplicateAsync(Drug drug)
         {
-            return await _db.Drugs.AnyAsync
-                (d => d.PersonId == drug.PersonId && d.DrugName == drug.DrugName);
-            
+            return await _db.Drugs.AnyAsync(
+                d => d.PersonId == drug.PersonId
+                && d.DrugName == drug.DrugName
+                && d.Id != drug.Id
+                && !d.IsDeleted);
+
+        }
+        public async Task<Drug> GetByIdAsync(int id)
+        {
+            return await _db.Drugs
+                .FirstOrDefaultAsync(x => !x.IsDeleted && x.Id == id);
+        }
+        public async Task<List<Drug>> GetTodayDrugsAsync(int personId)
+        {
+            var start = DateTime.Today;
+            var end = start.AddDays(1);
+
+            return await _db.Drugs
+                .Where(d => d.PersonId == personId
+                         && !d.IsDeleted
+                         && d.IsActive
+                         && d.NextTokenTime >= start
+                         && d.NextTokenTime < end)
+                .ToListAsync();
+        }
+        public async Task UpdateAfterTakenAsync(int drugId,DateTime takenTime, DateTime nextTokenTime)
+        {
+            var drug = await _db.Drugs
+                .FirstOrDefaultAsync(d => d.Id == drugId && !d.IsDeleted);
+            if (drug == null) return;
+
+            drug.LastTakenTime = takenTime;
+            drug.NextTokenTime = nextTokenTime;
+            drug.DrugQty--;
+            await _db.SaveChangesAsync();
+        }
+        public async Task<bool> MarkAsDeletedAsync(int id)
+        {
+            var result = await _db.Drugs.FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
+            if (result == null) return false;
+            result.IsDeleted = true;
+            await _db.SaveChangesAsync();
+            return true;
+        }
+        public async Task<Drug> GetNextDrugAsync(int personId)
+        {
+            var today = DateTime.Today;
+            var tomorrow = today.AddDays(1);
+            return await _db.Drugs
+                .Where(d => d.PersonId == personId
+                         && !d.IsDeleted
+                         && d.IsActive
+                         && d.NextTokenTime >= today
+                         && d.NextTokenTime < tomorrow)
+                .OrderBy(d => d.NextTokenTime)
+                .FirstOrDefaultAsync();
         }
     }
 }

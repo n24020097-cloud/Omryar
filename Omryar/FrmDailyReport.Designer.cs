@@ -34,13 +34,27 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabReport = new System.Windows.Forms.TabPage();
             this.dgvReport = new System.Windows.Forms.DataGridView();
+            this.colid = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.date2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.coldelete = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.coledit = new System.Windows.Forms.DataGridViewButtonColumn();
             this.tabPageTrash = new System.Windows.Forms.TabPage();
             this.dgvTrash = new System.Windows.Forms.DataGridView();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ReportDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.edit = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.delete = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.DisplayTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.button1 = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnGoBack = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.dgvTasks = new System.Windows.Forms.DataGridView();
+            this.taskId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.coldelete1 = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.IsCompleted = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.TaskTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
             this.button3 = new System.Windows.Forms.Button();
             this.brnSetting = new System.Windows.Forms.Button();
@@ -61,20 +75,6 @@
             this.rbtnAngryEmoji = new System.Windows.Forms.RadioButton();
             this.rbtnSadEmoji = new System.Windows.Forms.RadioButton();
             this.rbtnHappyEmoji = new System.Windows.Forms.RadioButton();
-            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ReportDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.edit = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.delete = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.DisplayTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colid = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.date2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.date = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.coldelete = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.coledit = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.taskId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.coldelete1 = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.IsCompleted = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.TaskTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -181,6 +181,36 @@
             this.dgvReport.TabIndex = 9;
             this.dgvReport.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
+            // colid
+            // 
+            this.colid.DataPropertyName = "Id";
+            this.colid.HeaderText = "Column1";
+            this.colid.Name = "colid";
+            this.colid.Visible = false;
+            // 
+            // date2
+            // 
+            this.date2.DataPropertyName = "ReportDate";
+            this.date2.HeaderText = "Column1";
+            this.date2.Name = "date2";
+            this.date2.Visible = false;
+            // 
+            // date
+            // 
+            this.date.DataPropertyName = "DisplayTitle";
+            this.date.HeaderText = "تاریخ";
+            this.date.Name = "date";
+            // 
+            // coldelete
+            // 
+            this.coldelete.HeaderText = "حذف";
+            this.coldelete.Name = "coldelete";
+            // 
+            // coledit
+            // 
+            this.coledit.HeaderText = "ویرایش";
+            this.coledit.Name = "coledit";
+            // 
             // tabPageTrash
             // 
             this.tabPageTrash.Controls.Add(this.dgvTrash);
@@ -204,9 +234,41 @@
             this.dgvTrash.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvTrash.Location = new System.Drawing.Point(3, 3);
             this.dgvTrash.Name = "dgvTrash";
+            this.dgvTrash.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.dgvTrash.Size = new System.Drawing.Size(257, 269);
             this.dgvTrash.TabIndex = 0;
             this.dgvTrash.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTrash_CellContentClick);
+            // 
+            // Id
+            // 
+            this.Id.DataPropertyName = "Id";
+            this.Id.HeaderText = "Id";
+            this.Id.Name = "Id";
+            this.Id.Visible = false;
+            // 
+            // ReportDate
+            // 
+            this.ReportDate.DataPropertyName = "ReportDate";
+            this.ReportDate.HeaderText = "Column1";
+            this.ReportDate.Name = "ReportDate";
+            this.ReportDate.Visible = false;
+            // 
+            // edit
+            // 
+            this.edit.HeaderText = "ویرایش";
+            this.edit.Name = "edit";
+            // 
+            // delete
+            // 
+            this.delete.HeaderText = "حذف";
+            this.delete.Name = "delete";
+            this.delete.Text = "X";
+            // 
+            // DisplayTitle
+            // 
+            this.DisplayTitle.DataPropertyName = "DisplayTitle";
+            this.DisplayTitle.HeaderText = "تاریخ";
+            this.DisplayTitle.Name = "DisplayTitle";
             // 
             // button1
             // 
@@ -270,10 +332,33 @@
             this.TaskTitle});
             this.dgvTasks.Location = new System.Drawing.Point(410, 171);
             this.dgvTasks.Name = "dgvTasks";
-            this.dgvTasks.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.dgvTasks.Size = new System.Drawing.Size(215, 385);
             this.dgvTasks.TabIndex = 0;
             this.dgvTasks.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTasks_CellContentClick);
+            // 
+            // taskId
+            // 
+            this.taskId.DataPropertyName = "Id";
+            this.taskId.HeaderText = "Column1";
+            this.taskId.Name = "taskId";
+            this.taskId.Visible = false;
+            // 
+            // coldelete1
+            // 
+            this.coldelete1.HeaderText = "حذف";
+            this.coldelete1.Name = "coldelete1";
+            // 
+            // IsCompleted
+            // 
+            this.IsCompleted.DataPropertyName = "IsCompleted";
+            this.IsCompleted.HeaderText = "وضعیت";
+            this.IsCompleted.Name = "IsCompleted";
+            // 
+            // TaskTitle
+            // 
+            this.TaskTitle.DataPropertyName = "TaskTitle";
+            this.TaskTitle.HeaderText = "کار";
+            this.TaskTitle.Name = "TaskTitle";
             // 
             // pictureBox6
             // 
@@ -507,91 +592,6 @@
             this.rbtnHappyEmoji.TabStop = true;
             this.rbtnHappyEmoji.Tag = "0";
             this.rbtnHappyEmoji.UseVisualStyleBackColor = true;
-            // 
-            // Id
-            // 
-            this.Id.DataPropertyName = "Id";
-            this.Id.HeaderText = "Id";
-            this.Id.Name = "Id";
-            this.Id.Visible = false;
-            // 
-            // ReportDate
-            // 
-            this.ReportDate.DataPropertyName = "ReportDate";
-            this.ReportDate.HeaderText = "Column1";
-            this.ReportDate.Name = "ReportDate";
-            this.ReportDate.Visible = false;
-            // 
-            // edit
-            // 
-            this.edit.HeaderText = "ویرایش";
-            this.edit.Name = "edit";
-            // 
-            // delete
-            // 
-            this.delete.HeaderText = "حذف";
-            this.delete.Name = "delete";
-            this.delete.Text = "X";
-            // 
-            // DisplayTitle
-            // 
-            this.DisplayTitle.DataPropertyName = "DisplayTitle";
-            this.DisplayTitle.HeaderText = "تاریخ";
-            this.DisplayTitle.Name = "DisplayTitle";
-            // 
-            // colid
-            // 
-            this.colid.DataPropertyName = "Id";
-            this.colid.HeaderText = "Column1";
-            this.colid.Name = "colid";
-            this.colid.Visible = false;
-            // 
-            // date2
-            // 
-            this.date2.DataPropertyName = "ReportDate";
-            this.date2.HeaderText = "Column1";
-            this.date2.Name = "date2";
-            this.date2.Visible = false;
-            // 
-            // date
-            // 
-            this.date.DataPropertyName = "DisplayTitle";
-            this.date.HeaderText = "تاریخ";
-            this.date.Name = "date";
-            // 
-            // coldelete
-            // 
-            this.coldelete.HeaderText = "حذف";
-            this.coldelete.Name = "coldelete";
-            // 
-            // coledit
-            // 
-            this.coledit.HeaderText = "ویرایش";
-            this.coledit.Name = "coledit";
-            // 
-            // taskId
-            // 
-            this.taskId.DataPropertyName = "Id";
-            this.taskId.HeaderText = "Column1";
-            this.taskId.Name = "taskId";
-            this.taskId.Visible = false;
-            // 
-            // coldelete1
-            // 
-            this.coldelete1.HeaderText = "حذف";
-            this.coldelete1.Name = "coldelete1";
-            // 
-            // IsCompleted
-            // 
-            this.IsCompleted.DataPropertyName = "IsCompleted";
-            this.IsCompleted.HeaderText = "وضعیت";
-            this.IsCompleted.Name = "IsCompleted";
-            // 
-            // TaskTitle
-            // 
-            this.TaskTitle.DataPropertyName = "TaskTitle";
-            this.TaskTitle.HeaderText = "کار";
-            this.TaskTitle.Name = "TaskTitle";
             // 
             // FrmDailyReport
             // 

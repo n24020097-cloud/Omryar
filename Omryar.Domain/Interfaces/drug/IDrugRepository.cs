@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Omryar.Domain.Interfaces
 {
-    public interface IDrugRepository
+    public interface IDrugRepository:IRepository<Drug>
     {
-        Task AddAsync(Drug drug);
-        Task DeleteAsync(int id);
         Task<List<Drug>> GetDrugsByPersonIdAsync(int personId);
-        Task<Drug> GetDrugByIdAsync(int drugId);
         Task<bool> UpdateAsync(Drug drug);
         Task<bool> IsDuplicateAsync(Drug drug);
+        Task<List<Drug>> GetTodayDrugsAsync(int personId);
+        Task UpdateAfterTakenAsync(int drugId, DateTime takenTime, DateTime nextTokenTime);
+        Task<Drug> GetNextDrugAsync(int personId);
     }
 }

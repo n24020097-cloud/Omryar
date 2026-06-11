@@ -74,7 +74,6 @@ namespace Omryar.DAL
 
             return _db.SaveChanges() > 0;
         }
-
         public async Task<Report> GetByIdAsync(int id)
         {
             var report = await _db.DailyReports

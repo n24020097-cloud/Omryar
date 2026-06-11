@@ -16,8 +16,8 @@ namespace Omryar.Domain
         public int RepeatValue { get; set; }
         public bool IsActive { get; set; }
         public string Note { get; set; }
-        public DateTime? LastTakenTime { get; set; }
+        public DateTime LastTakenTime { get; set; }
         public int DrugQty { get; set; }
-
+        public DateTime NextTokenTime { get; set; }
     }
 }

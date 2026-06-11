@@ -32,17 +32,21 @@ namespace Omryar
 
         private async void btnRecord_Click(object sender, EventArgs e)
         {
-            var drug=new DrugDto()
+            var drug = new DrugDto()
             {
-                Id=_currentDrugId,
-                DrugName = mtxtDrugName.Text,
+                Id = _currentDrugId,
+                DrugName = txtDrugName.Text,
                 DrugQty = int.Parse(numericUpDownQty.Value.ToString()),
                 IsActive = checkBoxActive.Checked,
                 LastTakenTime = dateTimePicker1.Value,
                 Note = rtxtNote.Text,
                 RepeatType = (RepeatType)comboBoxtype.SelectedIndex,
                 RepeatValue = int.Parse(numericUpDownRepeatValue.Value.ToString()),
-                PersonId=StaticData.CurrentUser.Id
+                PersonId = StaticData.CurrentUser.Id,
+                NextTokenTime = DrugScheduleCalculator.Calculate
+                (dateTimePicker1.Value,
+                (RepeatType)comboBoxtype.SelectedIndex,
+                int.Parse(numericUpDownRepeatValue.Value.ToString()))
             };
             if (_currentDrugId == 0)
             {
@@ -54,31 +58,61 @@ namespace Omryar
                 var result = await _drugService.UpdateDrugAsync(drug);
                 MessageBox.Show(result.Message);
             }
-            fillDgv();
+            await fillDgvAllDrugs();
+            await FillTodayDrugsGridAsync();
             clearFrm();
         }
 
-        private void FrmReminder_Load(object sender, EventArgs e)
+        private async void FrmReminder_Load(object sender, EventArgs e)
         {
-            fillDgv();
+            await fillDgvAllDrugs();
+            await FillTodayDrugsGridAsync();
+            LoadComboBox();
+            await CheckOverdueDrugsAsync();
+
+        }
+
+        private async Task CheckOverdueDrugsAsync()
+        {
+            var todayDrugs = dgvTodayDrugs.DataSource as List<TodayDrugDto>;
+            if (todayDrugs == null) return;
+
+            var overdueDrugs = todayDrugs
+                .Where(d => d.NextTokenTime <= DateTime.Now)
+                .ToList();
+
+            foreach (var drug in overdueDrugs)
+            {
+                var answer = MessageBox.Show(
+                    $"آیا داروی «{drug.DrugName}» را مصرف کردید؟",
+                    "یادآوری دارو",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (answer == DialogResult.Yes)
+                    await MarkAsTakenAndRefreshAsync(drug.Id);
+            }
+        }
+       
+        private void LoadComboBox()
+        {
             comboBoxtype.Items.Add("ساعتی");
             comboBoxtype.Items.Add("روزانه");
             comboBoxtype.Items.Add("هفتگی");
-
             comboBoxtype.DisplayMember = "Text";
             comboBoxtype.ValueMember = "Value";
         }
 
-        private async void dgvReminder_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private async void dgvAllDrugs_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if(e.ColumnIndex<=0) return;
-            var drug = dgvReminder.Rows[e.RowIndex].DataBoundItem as DrugDto;
+            var drug = dgvAllDrugs.Rows[e.RowIndex].DataBoundItem as DrugDto;
             if (drug == null) return;
-            if (dgvReminder.Columns[e.ColumnIndex].HeaderText == "ویرایش")
+            if (dgvAllDrugs.Columns[e.ColumnIndex].HeaderText == "ویرایش")
             {
                 var fullDrug = await _drugService.GetDrugByIdAsync(drug.Id);
                 _currentDrugId = fullDrug.Data.Id;
-                mtxtDrugName.Text = fullDrug.Data.DrugName;
+                txtDrugName.Text = fullDrug.Data.DrugName;
                 rtxtNote.Text = fullDrug.Data.Note;
                 numericUpDownQty.Value = fullDrug.Data.DrugQty;
                 numericUpDownRepeatValue.Value=fullDrug.Data.RepeatValue;
@@ -87,22 +121,29 @@ namespace Omryar
                 dateTimePicker1.Value = (DateTime)fullDrug.Data.LastTakenTime;
             }
 
-            if (dgvReminder.Columns[e.ColumnIndex].HeaderText == "حذف")
+            if (dgvAllDrugs.Columns[e.ColumnIndex].HeaderText == "حذف")
             {
                 await _drugService.DeleteDrugAsync(drug.Id);
                 clearFrm();
-                fillDgv();
+                await fillDgvAllDrugs();
             }
         }
 
-        private async void fillDgv()
+        private async Task fillDgvAllDrugs()
         {
-            dgvReminder.DataSource = await _drugService.GetDrugsByPersonIdAsync(StaticData.CurrentUser.Id);
+            dgvAllDrugs.DataSource = await _drugService
+                .GetDrugsByPersonIdAsync(StaticData.CurrentUser.Id);
+        }
+
+        private async Task FillTodayDrugsGridAsync()
+        {
+            dgvTodayDrugs.DataSource = await _drugService
+                .GetTodayDrugsAsync(StaticData.CurrentUser.Id);
         }
 
         private void clearFrm()
         {
-            mtxtDrugName.Text = "";
+            txtDrugName.Text = "";
             rtxtNote.Text = "";
             numericUpDownQty.Value = 0;
             numericUpDownRepeatValue.Value = 0;
@@ -119,6 +160,46 @@ namespace Omryar
         {
             new FrmSetting().Show();
             this.Close();
+        }
+
+        private async void dgvTodayDrugs_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+            if (dgvTodayDrugs.Columns[e.ColumnIndex].Name != "columnStatus") return;
+
+            var drug = dgvTodayDrugs.Rows[e.RowIndex].DataBoundItem as TodayDrugDto;
+            if (drug == null) return;
+
+            if (drug.NextTokenTime > DateTime.Now)
+            {
+                MessageBox.Show(
+                    $"هنوز زمان مصرف «{drug.DrugName}» نرسیده است.",
+                    "خطا",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
+            var answer = MessageBox.Show(
+                $"آیا داروی «{drug.DrugName}» را مصرف کردید؟",
+                "تأیید مصرف دارو",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (answer == DialogResult.Yes)
+                await MarkAsTakenAndRefreshAsync(drug.Id);
+        }
+
+        private async Task MarkAsTakenAndRefreshAsync(int drugId)
+        {
+            var result = await _drugService.MarkDrugAsTakenAsync(drugId);
+            if (!string.IsNullOrEmpty(result.Message))
+            {
+                MessageBox.Show(result.Message, "Notice",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            await FillTodayDrugsGridAsync();
+            await fillDgvAllDrugs();
         }
     }
 }

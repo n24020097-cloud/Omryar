@@ -161,6 +161,7 @@
             // 
             // richTextBoxNote
             // 
+            this.richTextBoxNote.Font = new System.Drawing.Font("2  Nazanin", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.richTextBoxNote.Location = new System.Drawing.Point(75, 284);
             this.richTextBoxNote.Name = "richTextBoxNote";
             this.richTextBoxNote.Size = new System.Drawing.Size(200, 97);
@@ -170,15 +171,17 @@
             // dateTimePicker1
             // 
             this.dateTimePicker1.CustomFormat = "yyyy/MM/dd HH:mm";
+            this.dateTimePicker1.Font = new System.Drawing.Font("2  Nazanin", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dateTimePicker1.Location = new System.Drawing.Point(75, 233);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.ShowUpDown = true;
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 24);
+            this.dateTimePicker1.Size = new System.Drawing.Size(200, 27);
             this.dateTimePicker1.TabIndex = 2;
             // 
             // txtSpecialty
             // 
+            this.txtSpecialty.Font = new System.Drawing.Font("2  Nazanin", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.txtSpecialty.Location = new System.Drawing.Point(129, 182);
             this.txtSpecialty.Multiline = true;
             this.txtSpecialty.Name = "txtSpecialty";
@@ -187,6 +190,7 @@
             // 
             // txtDoctorName
             // 
+            this.txtDoctorName.Font = new System.Drawing.Font("2  Nazanin", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.txtDoctorName.Location = new System.Drawing.Point(129, 131);
             this.txtDoctorName.Multiline = true;
             this.txtDoctorName.Name = "txtDoctorName";

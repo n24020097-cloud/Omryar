@@ -15,7 +15,9 @@ namespace Omryar.Domain.Interfaces
         Task<OperationResult<DrugDto>> GetDrugByIdAsync(int id);
         Task<List<DrugDto>> GetDrugsByPersonIdAsync(int personId);
         Task<OperationResult> UpdateDrugAsync(DrugDto drugDto);
-        Task<OperationResult> IsDuplicateAsync(DrugDto drugDto);
-
+        Task<OperationResult> IsDuplicateAsync(DrugDto drugDto); 
+        Task<List<TodayDrugDto>> GetTodayDrugsAsync(int personId);
+        Task<OperationResult> MarkDrugAsTakenAsync(int drugId);
+        Task<TodayDrugDto> GetNextDrugAsync(int personId);
     }
 }

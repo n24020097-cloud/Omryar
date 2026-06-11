@@ -20,14 +20,16 @@ namespace Omryar.Service
     {
         IPersonRepository _personRepository;
         private readonly IUserSettingRepository _settingRepo;
-        public PersonService(IPersonRepository personRepo, IUserSettingRepository settingRepo)
+        IValidator<AddPersonDto> _validator;
+        public PersonService(IPersonRepository personRepo, IUserSettingRepository settingRepo,IValidator<AddPersonDto> validator)
         {
             _personRepository = personRepo;
             _settingRepo = settingRepo;
+            _validator = validator;
         }
         public async Task<OperationResult> AddPersonAsync(AddPersonDto p)
         {
-            var valid = new ValidatorPerson().Validate(p);
+            var valid = _validator.Validate(p);
             var person = p.ToEntity();
             var duplicate =await IsDuplicateAsync(person);
             if (!valid.IsSuccess)

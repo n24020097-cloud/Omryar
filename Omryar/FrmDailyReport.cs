@@ -34,91 +34,16 @@ namespace Omryar
 
             dgvTrash.AutoGenerateColumns = false;
             dgvTrash.DataSource = await _reportService.GetDeletedReportAsync(StaticData.CurrentUser.Id);
-            //dgvTrash.Columns.Add(new DataGridViewTextBoxColumn()
-            //{
-            //    DataPropertyName = "ReportDate",
-            //    HeaderText = "تاریخ گزارش",
-            //    Name = "ReportDate"
-            //});
-
-            //dgvTrash.Columns.Add(new DataGridViewTextBoxColumn()
-            //{
-            //    DataPropertyName = "DisplayTitle",
-            //    HeaderText = "عنوان",
-            //    Name = "DisplayTitle"
-            //});
-
-            //dgvTrash.Columns.Add(new DataGridViewButtonColumn()
-            //{
-            //    HeaderText = "بازگردانی",
-            //    Text = "Restore",
-            //    UseColumnTextForButtonValue = true,
-            //    Name = "Restore"
-            //});
-
-            //dgvTrash.Columns.Add(new DataGridViewButtonColumn()
-            //{
-            //    HeaderText = "حذف کامل",
-            //    Text = "Delete",
-            //    UseColumnTextForButtonValue = true,
-            //    Name = "HardDelete"
-            //});
-
-
 
             dgvTasks.AutoGenerateColumns = false;
             dgvTasks.DataSource = _tasks;
             dgvTasks.ReadOnly = false;
             dgvTasks.AllowUserToAddRows = false;
-            //dgvTasks.Columns.Add(new DataGridViewTextBoxColumn()
-            //{
-            //    DataPropertyName = "TaskTitle",
-            //    HeaderText = "عنوان کار",
-            //    Name = "TaskTitle"
-            //});
-
-            //dgvTasks.Columns.Add(new DataGridViewCheckBoxColumn()
-            //{
-            //    DataPropertyName = "IsCompleted",
-            //    HeaderText = "انجام شده",
-            //    Name = "IsCompleted"
-            //});
-
-            //dgvTasks.Columns.Add(new DataGridViewButtonColumn()
-            //{
-            //    HeaderText = "حذف",
-            //    Text = "X",
-            //    UseColumnTextForButtonValue = true,
-            //    Name = "Delete"
-            //});
-
 
             dgvReport.AutoGenerateColumns = false;
             await FillDgvReport();
-
-            //    dgvReport.Columns.Add(new DataGridViewTextBoxColumn()
-            //    {
-            //        DataPropertyName = "ReportDate",
-            //        HeaderText = "گزارش"
-            //    });
-            //    dgvReport.Columns.Add(new DataGridViewTextBoxColumn()
-            //    {
-            //        DataPropertyName = "ReportId",
-            //        Visible = false
-            //    });
-            //    dgvReport.Columns.Add(new DataGridViewButtonColumn()
-            //    {
-            //        HeaderText = "ویرایش",
-            //        Text = "ویرایش",
-            //        UseColumnTextForButtonValue = true
-            //    });
-            //    dgvReport.Columns.Add(new DataGridViewButtonColumn()
-            //    {
-            //        HeaderText = "حذف",
-            //        Text = "X",
-            //        UseColumnTextForButtonValue = true
-            //    });
         }
+
         public void FillDgvTasks(List<ReportTaskDto> tasks)
         {
             _tasks.Clear();
@@ -131,6 +56,7 @@ namespace Omryar
                 _tasks.Add(task);
             }
         }
+
         public int GetSelectedMode()
         {
             foreach (RadioButton rbtn in panel2.Controls.OfType<RadioButton>())
@@ -164,10 +90,12 @@ namespace Omryar
             dgvTasks.CurrentCell = dgvTasks.Rows[dgvTasks.Rows.Count - 1].Cells[1];
             dgvTasks.BeginEdit(true);
         }
+
         public List<ReportTaskDto> GetTasks()
         {
             return _tasks.ToList();
         }
+
         private async void btnSave_ClickAsync(object sender, EventArgs e)
         {
             var report = new ReportDto()
@@ -195,6 +123,7 @@ namespace Omryar
             await FillDgvReport();
             ClearForm();
         }
+
         private void ClearForm()
         {
             _currentReportId = 0;
@@ -204,20 +133,24 @@ namespace Omryar
             FillDgvTasks(null);
             SetSelectedMode(0);
         }
+
         private void btnGoBack_Click(object sender, EventArgs e)
         {
             new FrmHome().Show();
             this.Close();
         }
+
         public async Task FillDgvTrash()
         {
             dgvTrash.DataSource = await _reportService.GetDeletedReportAsync(StaticData.CurrentUser.Id);
         }
+
         public async Task FillDgvReport()
         {
             var list = await _reportService.SelectReportsAsync(StaticData.CurrentUser.Id);
             dgvReport.DataSource = list.ToList();
         }
+
         private async void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;

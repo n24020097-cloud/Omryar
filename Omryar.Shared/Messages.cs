@@ -11,17 +11,18 @@ namespace Omryar.Shared
         public static class DrugMessages
         {
             public static string DrugNotFound => "داروی مورد نظر یافت نشد";
-            public static string DrugIsNull = "اطلاعات دارو نامعتبر است.";
-            public static string DrugNameRequired = "نام دارو الزامی است.";
-            public static string DrugNameLength = "نام دارو باید حداقل 2 کاراکتر باشد.";
-            public static string InvalidRepeatValue = "مقدار تکرار دارو نامعتبر است.";
-            public static string InvalidDrugQuantity = "تعداد دارو نمی‌تواند منفی باشد.";
-            public static string LastTakenTimeRequired = "زمان شروع مصرف دارو را مشخص کنید.";
-            public static string InvalidLastTakenTime = "زمان مصرف نمی‌تواند در آینده باشد.";
-            public static string DrugAdded = "دارو با موفقیت ثبت شد.";
-            public static string DrugUpdated = "دارو با موفقیت ویرایش شد.";
-            public static string DrugDeleted = "دارو با موفقیت حذف شد.";
-            public static string DuplicateDrug = "این دارو قبلاً ثبت شده است.";
+            public static string DrugIsNull => "اطلاعات دارو نامعتبر است.";
+            public static string DrugNameRequired => "نام دارو الزامی است.";
+            public static string DrugNameLength => "نام دارو باید حداقل 2 کاراکتر باشد.";
+            public static string InvalidRepeatValue => "مقدار تکرار دارو نامعتبر است.";
+            public static string InvalidDrugQuantity => "تعداد دارو نمی‌تواند منفی باشد.";
+            public static string LastTakenTimeRequired => "زمان شروع مصرف دارو را مشخص کنید.";
+            public static string InvalidLastTakenTime => "زمان مصرف نمی‌تواند در آینده باشد.";
+            public static string DrugAdded => "دارو با موفقیت ثبت شد.";
+            public static string DrugUpdated => "دارو با موفقیت ویرایش شد.";
+            public static string DrugDeleted => "دارو با موفقیت حذف شد.";
+            public static string DuplicateDrug => "این دارو قبلاً ثبت شده است.";
+            public static string DrugFinished => "دارو تموم شده. باید بخریش..";
         }
         public static class FullNameMessages
         {
@@ -85,32 +86,20 @@ namespace Omryar.Shared
         public static class VisitMessages
         {
             public static string VisitAdded => "ویزیت با موفقیت ثبت شد.";
-
+            public static string VisitTimeHasNotArrived => "زمان این ویزیت الان نیست.";
             public static string VisitUpdated => "ویزیت با موفقیت ویرایش شد.";
-
             public static string VisitDeleted => "ویزیت با موفقیت حذف شد.";
-
             public static string VisitNotFound => "ویزیت موردنظر یافت نشد.";
-
             public static string DeleteQuestion => "آیا از حذف این ویزیت اطمینان دارید؟";
-
             public static string ReminderTitle => "یادآوری ویزیت";
-
             public static string UpcomingVisitReminder => "شما در 24 ساعت آینده ویزیت ثبت‌شده دارید.";
-
             public static string VisitMarkedAsDone => "وضعیت ویزیت با موفقیت ثبت شد.";
-
             public static string NotificationRegistered => "یادآوری این ویزیت ثبت شد.";
-
             public static string NoUpcomingVisits => "هیچ ویزیتی در 24 ساعت آینده وجود ندارد.";
             public static string VisitValidationFailed => "اطلاعات وارد شده معتبر نیست.";
-
             public static string DoctorNameRequired => "نام پزشک الزامی است.";
-
             public static string SpecialtyRequired => "تخصص پزشک الزامی است.";
-
             public static string InvalidVisitDate => "تاریخ و ساعت ویزیت معتبر نیست.";
-
             public static string PastVisitDate => "زمان ویزیت نمی‌تواند در گذشته باشد.";
         }
         public static string PersonNotFound => "این شخص پیدا نشد";

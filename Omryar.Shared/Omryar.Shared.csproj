@@ -41,9 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DrugScheduleCalculator.cs" />
+    <Compile Include="Enums\Mood.cs" />
+    <Compile Include="Enums\RepeatType.cs" />
     <Compile Include="HashHelper.cs" />
     <Compile Include="Messages.cs" />
-    <Compile Include="MyTextBox.cs" />
     <Compile Include="OperationResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

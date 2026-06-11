@@ -57,6 +57,14 @@
     <Compile Include="Migrations\202606092013223_InitialCreate.Designer.cs">
       <DependentUpon>202606092013223_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202606101917229_updateDrugs.cs" />
+    <Compile Include="Migrations\202606101917229_updateDrugs.Designer.cs">
+      <DependentUpon>202606101917229_updateDrugs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202606101933129_fixDate.cs" />
+    <Compile Include="Migrations\202606101933129_fixDate.Designer.cs">
+      <DependentUpon>202606101933129_fixDate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OmryarDbContext.cs" />
     <Compile Include="PersonRepo.cs" />
@@ -82,6 +90,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202606092013223_InitialCreate.resx">
       <DependentUpon>202606092013223_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202606101917229_updateDrugs.resx">
+      <DependentUpon>202606101917229_updateDrugs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202606101933129_fixDate.resx">
+      <DependentUpon>202606101933129_fixDate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

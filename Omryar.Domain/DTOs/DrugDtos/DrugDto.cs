@@ -17,6 +17,7 @@ namespace Omryar.Domain.DTOs.DrugDtos
         public bool IsActive { get; set; }
         public int DrugQty { get; set; }
         public string Note { get; set; }
-        public DateTime? LastTakenTime { get; set; }
+        public DateTime NextTokenTime { get; set; }
+        public DateTime LastTakenTime { get; set; }
     }
 }

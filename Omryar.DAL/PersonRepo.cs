@@ -24,7 +24,6 @@ namespace Omryar.DAL
             _db.People.Add(entity);
             await _db.SaveChangesAsync();
         }
-
         public async Task<bool> MarkAsDeletedAsync(int id)
         {
             var existingItem = await _db.People.
@@ -35,34 +34,28 @@ namespace Omryar.DAL
             await _db.SaveChangesAsync();
             return true;
         }
-
         public async Task<Person> GetByIdAsync(int id)
         {
             return await _db.People.FirstOrDefaultAsync(p=>p.Id == id && !p.IsDeleted);
         }
-
         public async Task<List<Person>> SelectPeopleAsync()
         {
             return await _db.People.Where(p=>!p.IsDeleted).ToListAsync();
         }
-
         public async Task<Person> GetByUserNameAsync(string userName)
         {
             return await _db.People.FirstOrDefaultAsync(p=>p.UserName==userName && !p.IsDeleted);
         }
-
         public async Task<bool> IsDuplicateNationalCodeAsync(string nationalCode)
         {
             return await _db.People.AnyAsync(p=>p.NationalCode==nationalCode
             && !p.IsDeleted);
         }
-
         public async Task<bool> IsDuplicateUserNameAsync(string username)
         {
             return await _db.People.AnyAsync(p => p.UserName == username
             && !p.IsDeleted);
         }
-
         public async Task<bool> UpdateAsync(Person person)
         {
             var result = await GetByIdAsync(person.Id);

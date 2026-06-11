@@ -13,16 +13,18 @@ namespace Omryar.Service.Services
 {
     public class VisitReminderService:IVisitService
     {
-        private readonly IVisitRepository _visitRepo;
+        private IVisitRepository _visitRepo;
+        IValidator<VisitReminderDto> _validator;
 
-        public VisitReminderService(IVisitRepository visitRepo)
+        public VisitReminderService(IVisitRepository visitRepo,IValidator<VisitReminderDto> validator)
         {
             _visitRepo = visitRepo;
+            _validator = validator;
         }
 
         public async Task<OperationResult> AddAsync(VisitReminderDto dto)
         {
-            var validate =new  ValidatorVisitReminder().Validate(dto);
+            var validate = _validator.Validate(dto);
 
             if (!validate.IsSuccess)
                 return OperationResult.Failed(validate.Message);
@@ -33,7 +35,7 @@ namespace Omryar.Service.Services
 
         public async Task<OperationResult> UpdateAsync(VisitReminderDto dto)
         {
-            var validate =new  ValidatorVisitReminder().Validate(dto);
+            var validate = _validator.Validate(dto);
             if (!validate.IsSuccess)
                 return OperationResult.Failed(validate.Message);
             var result = await _visitRepo.UpdateAsync(dto.ToEntity());
@@ -46,11 +48,11 @@ namespace Omryar.Service.Services
 
         public async Task<OperationResult> DeleteAsync(int id)
         {
-            var result = await _visitRepo.DeleteAsync(id);
-
-            if (!result)
+            var result = await _visitRepo.GetByIdAsync(id);
+            if (result==null)
                 return OperationResult.Failed(Messages.VisitMessages.VisitNotFound);
-
+            if (result.VisitDateTime < DateTime.Now)
+                return OperationResult.Failed(Messages.VisitMessages.VisitTimeHasNotArrived);
             return OperationResult.Success(Messages.VisitMessages.VisitDeleted);
         }
 

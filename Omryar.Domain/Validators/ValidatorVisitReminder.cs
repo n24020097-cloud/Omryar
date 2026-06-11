@@ -1,4 +1,6 @@
 ﻿using Omryar.Domain.DTOs;
+using Omryar.Domain.Entity;
+using Omryar.Domain.Interfaces;
 using Omryar.Shared;
 using System;
 using System.Collections.Generic;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Omryar.Domain.Validators
 {
-    public class ValidatorVisitReminder
+    public class ValidatorVisitReminder:IValidator<VisitReminderDto>
     {
         public OperationResult Validate(VisitReminderDto dto)
         {

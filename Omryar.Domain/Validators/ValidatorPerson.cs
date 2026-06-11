@@ -1,4 +1,5 @@
-﻿using Omryar.Service.DTOs;
+﻿using Omryar.Domain.Interfaces;
+using Omryar.Service.DTOs;
 using Omryar.Shared;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Omryar.Domain
 {
-    public class ValidatorPerson
+    public class ValidatorPerson: IValidator<AddPersonDto>
     {
         public OperationResult Validate(AddPersonDto p)
         {

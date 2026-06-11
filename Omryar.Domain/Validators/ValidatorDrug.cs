@@ -1,4 +1,5 @@
 ﻿using Omryar.Domain.DTOs.DrugDtos;
+using Omryar.Domain.Interfaces;
 using Omryar.Shared;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Xml.Linq;
 
 namespace Omryar.Domain
 {
-    public class ValidatorDrug
+    public class ValidatorDrug: IValidator<DrugDto>
     {
         public OperationResult Validate(DrugDto dto)
         {

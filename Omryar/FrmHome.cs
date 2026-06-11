@@ -20,6 +20,7 @@ namespace Omryar
             InitializeComponent();
         }
         IVisitService _visitService;
+        IDrugService _drugService;
         private void btnMedicationReminder_Click(object sender, EventArgs e)
         {
             new FrmReminder().Show();
@@ -51,46 +52,35 @@ namespace Omryar
             new FrmSetting().Show();
             this.Hide();
         }
+
         private void SetupDgvVisits()
         {
-            dgvVisits.AutoGenerateColumns = false;
-            dgvVisits.Columns.Clear();
-
-            dgvVisits.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                DataPropertyName = "DoctorName",
-                HeaderText = "پزشک"
-            });
-
-            dgvVisits.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                DataPropertyName = "Specialty",
-                HeaderText = "تخصص"
-            });
-
-            dgvVisits.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                DataPropertyName = "VisitDateTime",
-                HeaderText = "زمان ویزیت",
-                DefaultCellStyle = new DataGridViewCellStyle
-                {
-                    Format = "yyyy/MM/dd HH:mm"
-                }
-            });
-
-            dgvVisits.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                DataPropertyName = "Notes",
-                HeaderText = "یادداشت"
-            });
+            
         }
+
         private async void FrmHome_Load(object sender, EventArgs e)
         {
             SetupDgvVisits();
             _visitService = AppFactory.VisitService();
+            _drugService = AppFactory.DrugService();
             var visits = await _visitService.GetNext24HoursAsync(StaticData.CurrentUser.Id);
-
             dgvVisits.DataSource = visits;
+            await LoadNextDrugAsync();
+        }
+
+        private async Task LoadNextDrugAsync()
+        {
+            var drug = await _drugService.GetNextDrugAsync(StaticData.CurrentUser.Id);
+            if (drug == null) return;
+            txtName.Text = drug.DrugName;
+            txtNote.Text = drug.Note;
+            txtQty.Text = drug.DrugQty.ToString();
+            txtTime.Text = drug.NextTokenTime.ToString();
+        }
+
+        private void dgvVisits_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

@@ -22,7 +22,6 @@ namespace Omryar.DAL
             _db.VisitReminders.Add(visit);
             await _db.SaveChangesAsync();
         }
-
         public async Task<bool> UpdateAsync(VisitReminder visit)
         {
             var existingVisit = await _db.VisitReminders
@@ -41,28 +40,11 @@ namespace Omryar.DAL
 
             return true;
         }
-
-        public async Task<bool> DeleteAsync(int id)
-        {
-            var visit = await _db.VisitReminders
-                .FirstOrDefaultAsync(v => v.Id == id && !v.IsDeleted);
-
-            if (visit == null)
-                return false;
-
-            visit.IsDeleted = true;
-
-            await _db.SaveChangesAsync();
-
-            return true;
-        }
-
         public async Task<VisitReminder> GetByIdAsync(int id)
         {
             return await _db.VisitReminders
                 .FirstOrDefaultAsync(v => v.Id == id && !v.IsDeleted);
         }
-
         public async Task<List<VisitReminder>> GetByPersonIdAsync(int personId)
         {
             return await _db.VisitReminders
@@ -70,7 +52,6 @@ namespace Omryar.DAL
                 .OrderBy(v => v.VisitDateTime)
                 .ToListAsync();
         }
-
         public async Task<List<VisitReminder>> GetUpcoming24HoursAsync(int personId)
         {
             var now = DateTime.Now;
@@ -87,7 +68,6 @@ namespace Omryar.DAL
                 .OrderBy(v => v.VisitDateTime)
                 .ToListAsync();
         }
-
         public async Task MarkAsNotifiedAsync(int id)
         {
             var visit = await _db.VisitReminders
@@ -99,6 +79,15 @@ namespace Omryar.DAL
             visit.IsNotified = true;
 
             await _db.SaveChangesAsync();
+        }
+        public async Task<bool> MarkAsDeletedAsync(int id)
+        {
+            var visit =await GetByIdAsync(id);
+            if (visit == null)
+                return false;
+            visit.IsDeleted = true;
+            await _db.SaveChangesAsync();
+            return true;
         }
     }
 }

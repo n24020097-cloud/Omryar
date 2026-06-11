@@ -22,10 +22,24 @@ namespace Omryar.Service.Mappings
                 RepeatType = dto.RepeatType,
                 RepeatValue = dto.RepeatValue,
                 LastTakenTime = dto.LastTakenTime,
-                PersonId=dto.PersonId
+                PersonId=dto.PersonId,
+                NextTokenTime=dto.NextTokenTime
             };
         }
-
+        public static TodayDrugDto ToTodayDto(this Drug entity)
+        {
+            return new TodayDrugDto()
+            {
+                Id = entity.Id,
+                DrugName = entity.DrugName,
+                Note = entity.Note,
+                DrugQty = entity.DrugQty,
+                LastTakenTime = entity.LastTakenTime,
+                RepeatValue = entity.RepeatValue,
+                RepeatType = entity.RepeatType,
+                NextTokenTime = entity.NextTokenTime
+            };
+        }
         public static DrugDto ToDto(this Drug entity)
         {
             return new DrugDto()

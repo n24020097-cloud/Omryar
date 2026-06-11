@@ -1,5 +1,7 @@
 ﻿using Omryar.DAL;
+using Omryar.Domain;
 using Omryar.Domain.Interfaces;
+using Omryar.Domain.Validators;
 using Omryar.Service.Services;
 using System;
 using System.Collections.Generic;
@@ -16,56 +18,46 @@ namespace Omryar.Service
             return new OmryarDbContext();
         }
 
-        public static IPersonRepository PersonRepository()
-        {
-            return new PersonRepo(CreateContext());
-        }
-
         public static IPersonService PersonService()
         {
+            var db = CreateContext();
             return new PersonService(
-                PersonRepository(),
-                UserSettingRepository()
+                new PersonRepo(db),
+                new UserSettingRepository(db),
+                new ValidatorPerson()
             );
-        }
-
-        public static IReportRepository ReportRepository()
-        {
-            return new ReportRepo(CreateContext());
         }
 
         public static IReportService ReportService()
         {
-            return new ReportService(ReportRepository());
-        }
-
-        public static IDrugRepository DrugRepository()
-        {
-            return new DrugRepo(CreateContext());
+            var db = CreateContext();
+            return new ReportService(new ReportRepo(db));
         }
 
         public static IDrugService DrugService()
         {
-            return new DrugService(DrugRepository());
-        }
-
-        public static IVisitRepository VisitRepository()
-        {
-            return new VisitReminderRepository(CreateContext());
+            var db = CreateContext();
+            return new DrugService(
+                new DrugRepo(db),
+                new ValidatorDrug()
+            );
         }
 
         public static IVisitService VisitService()
         {
-            return new VisitReminderService(VisitRepository());
-        }
-        public static IUserSettingRepository UserSettingRepository()
-        {
-            return new UserSettingRepository(CreateContext());
+            var db = CreateContext();
+            return new VisitReminderService(
+                new VisitReminderRepository(db),
+                new ValidatorVisitReminder()
+            );
         }
 
         public static IUserSettingService UserSettingService()
         {
-            return new UserSettingService(UserSettingRepository());
+            var db = CreateContext();
+            return new UserSettingService(
+                new UserSettingRepository(db)
+            );
         }
     }
 }

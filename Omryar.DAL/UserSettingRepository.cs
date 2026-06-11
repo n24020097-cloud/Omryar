@@ -24,10 +24,20 @@ namespace Omryar.DAL
             await _db.SaveChangesAsync();
         }
 
+        public Task<UserSetting> GetByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<UserSetting> GetByPersonIdAsync(int personId)
         {
             return await _db.UserSettings
                 .FirstOrDefaultAsync(x => x.PersonId == personId);
+        }
+
+        public Task<bool> MarkAsDeletedAsync(int id)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<bool> UpdateAsync(UserSetting setting)

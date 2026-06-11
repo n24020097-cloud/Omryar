@@ -37,7 +37,6 @@ namespace Omryar.Service
                 return OperationResult.Success(Messages.ReportMessages.ReportIsDeleted);
             return OperationResult.Failed(Messages.ReportMessages.ReportNotFound);
         }
-
         public async Task<List<ReportListDto>> GetDeletedReportAsync(int id)
         {
             var listReport = await _reportRepo.GetDeletedReportsAsync(id);
@@ -63,7 +62,6 @@ namespace Omryar.Service
         {
             await _reportRepo.RestoreReportAsync(id);
         }
-
         public async Task<List<ReportListDto>> SelectReportsAsync(int id)
         {
             var listReport = await _reportRepo.SelectReportsAsync(id);
@@ -71,7 +69,6 @@ namespace Omryar.Service
                 .Select(x => x.ToReportListDto())
                 .ToList();
         }
-
         public async Task<OperationResult> UpdateReportAsync(ReportDto report)
         {
             var re = report.ToEntity();

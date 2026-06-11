@@ -64,7 +64,6 @@ namespace Omryar
             }
         }
 
-
         private void checkBoxShowPass_CheckedChanged(object sender, EventArgs e)
         {
             if(checkBoxShowPass.Checked)

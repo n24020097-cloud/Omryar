@@ -17,15 +17,16 @@ namespace Omryar.Service
     public class DrugService:IDrugService
     {
         IDrugRepository _drugRepository;
-
-        public DrugService(IDrugRepository drugRepository)
+        IValidator<DrugDto> _validator;
+        public DrugService(IDrugRepository drugRepository, IValidator<DrugDto> validator)
         {
-            _drugRepository=drugRepository;
+            _drugRepository = drugRepository;
+            _validator = validator;
         }
 
         public async Task<OperationResult> AddDrugAsync(DrugDto drugDto)
         {
-            var valid=new ValidatorDrug().Validate(drugDto);
+            var valid= _validator.Validate(drugDto);
             if (!valid.IsSuccess)
                 return OperationResult.Failed(valid.Message);
             var Duplicate =await IsDuplicateAsync(drugDto);
@@ -35,16 +36,37 @@ namespace Omryar.Service
             await _drugRepository.AddAsync(drug);
             return OperationResult.Success();
         }
+        public async Task<List<TodayDrugDto>> GetTodayDrugsAsync(int personId)
+        {
+            var list = await _drugRepository.GetTodayDrugsAsync(personId);
+            return list.Select(d => d.ToTodayDto()).ToList();
+        }
 
+        public async Task<OperationResult> MarkDrugAsTakenAsync(int drugId)
+        {
+            var drug = await _drugRepository.GetByIdAsync(drugId);
+            if (drug == null)
+                return OperationResult.Failed(Messages.DrugMessages.DrugNotFound);
+
+            var takenTime = DateTime.Now;
+            var nextTokenTime = DrugScheduleCalculator.Calculate(takenTime, drug.RepeatType, drug.RepeatValue);
+            await _drugRepository.UpdateAfterTakenAsync(drugId, takenTime, nextTokenTime);
+
+            if (drug.DrugQty - 1 <= 0)
+            {
+                await _drugRepository.MarkAsDeletedAsync(drugId);
+                return OperationResult.Success(Messages.DrugMessages.DrugFinished);
+            }
+            return OperationResult.Success();
+        }
         public async Task DeleteDrugAsync(int id)
         {
-            await _drugRepository.DeleteAsync(id);
-            
+            await _drugRepository.MarkAsDeletedAsync(id);
         }
 
         public async Task<OperationResult<DrugDto>> GetDrugByIdAsync(int id)
         {
-            var existingItem =await _drugRepository.GetDrugByIdAsync(id);
+            var existingItem =await _drugRepository.GetByIdAsync(id);
             if(existingItem == null)
                 return OperationResult<DrugDto>.Failed(Messages.DrugMessages.DrugNotFound);
             return OperationResult<DrugDto>.Success("", existingItem.ToDto());
@@ -58,6 +80,8 @@ namespace Omryar.Service
 
         public async Task<OperationResult> UpdateDrugAsync(DrugDto drugDto)
         {
+            var valid = _validator.Validate(drugDto);
+            if (!valid.IsSuccess) return OperationResult.Failed(valid.Message);
             var existingItem = await _drugRepository.UpdateAsync(drugDto.ToEntity());
             if(!existingItem) 
                 return OperationResult.Failed(Messages.DrugMessages.DrugNotFound);
@@ -70,6 +94,11 @@ namespace Omryar.Service
                 return OperationResult.Failed(Messages.DrugMessages.DuplicateDrug);
             return OperationResult.Success();
         }
-
+        public async Task<TodayDrugDto> GetNextDrugAsync(int personId)
+        {
+            var drug = await _drugRepository.GetNextDrugAsync(personId);
+            if (drug == null) return null;
+            return drug.ToTodayDto();
+        }
     }
 }

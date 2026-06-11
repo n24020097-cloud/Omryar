@@ -56,10 +56,9 @@
     <Compile Include="Entity\Report.cs" />
     <Compile Include="Entity\UserSetting.cs" />
     <Compile Include="Entity\VisitReminder.cs" />
-    <Compile Include="Enums\Mood.cs" />
-    <Compile Include="Enums\RepeatType.cs" />
     <Compile Include="Interfaces\drug\IDrugRepository.cs" />
     <Compile Include="Interfaces\drug\IDrugService.cs" />
+    <Compile Include="Interfaces\IValidator.cs" />
     <Compile Include="Interfaces\report\IReportRepository.cs" />
     <Compile Include="Interfaces\report\IReportService.cs" />
     <Compile Include="Interfaces\IRepository.cs" />

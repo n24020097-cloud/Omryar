@@ -27,6 +27,7 @@ namespace Omryar
             _personService = AppFactory.PersonService();
             _userSettingService = AppFactory.UserSettingService();
         }
+
         private async void btnRegister_Click(object sender, EventArgs e)
         {
             AddPersonDto p = new AddPersonDto

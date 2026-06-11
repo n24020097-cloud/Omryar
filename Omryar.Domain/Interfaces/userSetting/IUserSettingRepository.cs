@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace Omryar.Domain.Interfaces
 {
-    public interface IUserSettingRepository
+    public interface IUserSettingRepository:IRepository<UserSetting>
     {
-        Task AddAsync(UserSetting setting);
         Task<UserSetting> GetByPersonIdAsync(int personId);
         Task<bool> UpdateAsync(UserSetting setting);
     }
